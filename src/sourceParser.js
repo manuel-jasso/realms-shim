@@ -14,11 +14,11 @@
 // character strings explicitly.
 
 // We do not write the regexp in a straightforward way, so that an
-// apparennt html comment does not appear in this file. Thus, we avoid
+// apparent html comment does not appear in this file. Thus, we avoid
 // rejection by the overly eager rejectDangerousSources.
 const htmlCommentPattern = new RegExp(`(?:${'<'}!--|--${'>'})`);
 
-function rejectHtmlComments(s) {
+export function rejectHtmlComments(s) {
   const index = s.search(htmlCommentPattern);
   if (index !== -1) {
     const linenum = s.slice(0, index).split('\n').length; // more or less
@@ -31,7 +31,7 @@ function rejectHtmlComments(s) {
 // The proposed dynamic import expression is the only syntax currently
 // proposed, that can appear in non-module JavaScript code, that
 // enables direct access to the outside world that cannot be
-// surpressed or intercepted without parsing and rewriting. Instead,
+// suppressed or intercepted without parsing and rewriting. Instead,
 // this shim conservatively rejects any source text that seems to
 // contain such an expression. To do this safely without parsing, we
 // must also reject some valid programs, i.e., those containing
@@ -52,7 +52,7 @@ function rejectHtmlComments(s) {
 
 const importPattern = /\bimport\s*(?:\(|\/[/*])/;
 
-function rejectImportExpressions(s) {
+export function rejectImportExpressions(s) {
   const index = s.search(importPattern);
   if (index !== -1) {
     const linenum = s.slice(0, index).split('\n').length; // more or less
